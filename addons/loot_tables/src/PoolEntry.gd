@@ -1,3 +1,4 @@
+@tool
 class_name PoolEntry
 extends Resource
 
@@ -5,6 +6,9 @@ extends Resource
 
 func roll() -> Array[Resource]:
 	return []
+
+func title() -> String:
+	return "PoolEntry"
 
 func display_string(str_fn: Callable) -> String:
 	return "?PoolEntry"

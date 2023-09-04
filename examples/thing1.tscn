@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://big8ewf1odlki"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_gtupp"]
+radial_segments = 8
+rings = 4
+
+[node name="thing1" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_gtupp")

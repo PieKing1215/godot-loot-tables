@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=16 format=3 uid="uid://vvn3kuoid4h"]
+
+[ext_resource type="Script" path="res://addons/loot_tables/src/LootTableEntry.gd" id="1_5kv4x"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/LootTable.gd" id="1_5tufn"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/Pool.gd" id="2_i06ak"]
+[ext_resource type="PackedScene" uid="uid://big8ewf1odlki" path="res://examples/thing1.tscn" id="4_k0nxm"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/SingleSceneEntry.gd" id="4_pjqai"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/PoolEntry.gd" id="6_2xeu5"]
+[ext_resource type="PackedScene" uid="uid://wdp0tip7b4ov" path="res://examples/thing2.tscn" id="6_73lts"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/ChanceEntry.gd" id="7_2cv70"]
+
+[sub_resource type="Resource" id="Resource_7vnfk"]
+script = ExtResource("1_5kv4x")
+weight = 8.2
+
+[sub_resource type="Resource" id="Resource_3bcvc"]
+script = ExtResource("2_i06ak")
+rolls = 1
+entries = Array[ExtResource("6_2xeu5")]([SubResource("Resource_7vnfk")])
+
+[sub_resource type="Resource" id="Resource_hu7l8"]
+script = ExtResource("4_pjqai")
+scene = ExtResource("4_k0nxm")
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_r4pgs"]
+script = ExtResource("4_pjqai")
+scene = ExtResource("6_73lts")
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_w00js"]
+script = ExtResource("6_2xeu5")
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_crk6e"]
+script = ExtResource("7_2cv70")
+base = SubResource("Resource_w00js")
+chance = 0.719
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_u8lq8"]
+script = ExtResource("2_i06ak")
+rolls = 1
+entries = Array[ExtResource("6_2xeu5")]([SubResource("Resource_hu7l8"), SubResource("Resource_r4pgs"), SubResource("Resource_crk6e")])
+
+[resource]
+script = ExtResource("1_5tufn")
+pools = Array[ExtResource("2_i06ak")]([SubResource("Resource_3bcvc"), SubResource("Resource_u8lq8")])

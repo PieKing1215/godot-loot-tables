@@ -1,3 +1,4 @@
+@tool
 class_name ChanceEntry
 extends PoolEntry
 
@@ -13,6 +14,9 @@ func roll() -> Array[Resource]:
 		return base.roll()
 	else:
 		return []
+
+func title() -> String:
+	return "ChanceEntry"
 
 func display_string(str_fn: Callable) -> String:
 	return "%s%% %s" % [str(snapped(chance * 100, 0.01)), base.display_string(str_fn)]

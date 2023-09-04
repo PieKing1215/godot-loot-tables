@@ -1,3 +1,4 @@
+@tool
 class_name SingleSceneEntry
 extends PoolEntry
 
@@ -9,6 +10,8 @@ func _init(scene: PackedScene = null):
 func roll() -> Array[Resource]:
 	return [scene]
 
+func title() -> String:
+	return "SingleSceneEntry"
+
 func display_string(str_fn: Callable) -> String:
-	prints("SingleSceneEntry", scene.resource_path, str_fn.call(scene))
 	return str_fn.call(scene)

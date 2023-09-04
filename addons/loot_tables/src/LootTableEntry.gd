@@ -1,3 +1,4 @@
+@tool
 class_name LootTableEntry
 extends PoolEntry
 
@@ -5,6 +6,9 @@ extends PoolEntry
 
 func roll() -> Array[Resource]:
 	return loot_table.roll()
+
+func title() -> String:
+	return "LootTableEntry"
 
 func display_string(str_fn: Callable) -> String:
 	return loot_table.display_string(str_fn)

@@ -15,4 +15,4 @@ config/features=PackedStringArray("4.1", "Forward Plus")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/loot_tables/plugin.cfg")
+enabled=PackedStringArray("res://addons/loot_tables/plugin.cfg", "res://addons/plugin_refresher/plugin.cfg")
