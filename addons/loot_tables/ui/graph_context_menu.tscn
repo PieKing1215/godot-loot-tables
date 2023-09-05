@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvkepcywqwunl"]
+
+[ext_resource type="Script" path="res://addons/loot_tables/ui/BackgroundContext.gd" id="1_e4dog"]
+
+[node name="BackgroundContext" type="PopupMenu"]
+size = Vector2i(144, 100)
+visible = true
+item_count = 2
+item_0/text = "Add LootTable"
+item_0/id = 0
+item_1/text = "Add Pool"
+item_1/id = 1
+script = ExtResource("1_e4dog")
+
+[node name="AddSubMenu" type="PopupMenu" parent="."]
+item_count = 1
+item_0/text = "sub1"
+item_0/id = 0

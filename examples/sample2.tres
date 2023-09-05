@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=9 format=3 uid="uid://ktgv7in5nhkf"]
+
+[ext_resource type="Script" path="res://addons/loot_tables/src/LootTable.gd" id="1_cnqeq"]
+[ext_resource type="PackedScene" uid="uid://big8ewf1odlki" path="res://examples/thing1.tscn" id="1_qifxt"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/SingleSceneEntry.gd" id="2_rhguq"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/ChanceEntry.gd" id="3_lstjb"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/Pool.gd" id="4_yoyj0"]
+
+[sub_resource type="Resource" id="Resource_uxg7f"]
+script = ExtResource("2_rhguq")
+scene = ExtResource("1_qifxt")
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_7tfto"]
+script = ExtResource("3_lstjb")
+base = SubResource("Resource_uxg7f")
+chance = 0.5
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_poyjh"]
+script = ExtResource("4_yoyj0")
+rolls = 1
+entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_7tfto")])
+
+[resource]
+script = ExtResource("1_cnqeq")
+pools = Array[ExtResource("4_yoyj0")]([SubResource("Resource_poyjh")])

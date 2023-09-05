@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://deuf8j7ebjgue"]
+[gd_scene load_steps=4 format=3 uid="uid://deuf8j7ebjgue"]
 
 [ext_resource type="Script" path="res://addons/loot_tables/ui/LootTableEditor.gd" id="1_7mhv8"]
+[ext_resource type="Script" path="res://addons/loot_tables/ui/LTGraphEdit.gd" id="2_t3h45"]
+[ext_resource type="PackedScene" uid="uid://bvkepcywqwunl" path="res://addons/loot_tables/ui/graph_context_menu.tscn" id="3_fk6gu"]
 
 [node name="MainScreen" type="VBoxContainer"]
 anchors_preset = 15
@@ -23,4 +25,11 @@ custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_vertical = 3
 right_disconnects = true
-scroll_offset = Vector2(0, -35)
+script = ExtResource("2_t3h45")
+
+[node name="BackgroundContext" parent="." instance=ExtResource("3_fk6gu")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="popup_request" from="GraphEdit" to="." method="show_background_context"]
+[connection signal="id_pressed" from="BackgroundContext" to="." method="_on_background_context_id_pressed"]

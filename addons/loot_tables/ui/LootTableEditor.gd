@@ -1,11 +1,19 @@
 @tool
 extends Control
 
+var _plugin: EditorPlugin
 var _editing: LootTable
 
 const LootTableGraphNode = preload("res://addons/loot_tables/ui/LootTableGraphNode.gd")
 const PoolGraphNode = preload("res://addons/loot_tables/ui/PoolGraphNode.gd")
 const PoolEntryGraphNode = preload("res://addons/loot_tables/ui/PoolEntryGraphNode.gd")
+
+#var _graph_context_menu_scn: PackedScene = preload("res://addons/loot_tables/ui/graph_context_menu.tscn")
+
+var _context_pos
+
+func _ready():
+	%GraphEdit.grab_click_focus()
 
 func edit_table(lt: LootTable):
 	%Label.text = lt.get_path()
@@ -21,24 +29,36 @@ func edit_table(lt: LootTable):
 	
 	%GraphEdit.arrange_nodes()
 
-func _add_lt_node(graph: GraphEdit, lt: LootTable) -> GraphNode:
+func show_background_context(pos: Vector2):
+	%BackgroundContext.position = Vector2i(%GraphEdit.get_screen_position()) + Vector2i(pos)
+	_context_pos = (%GraphEdit.get_local_mouse_position() + %GraphEdit.scroll_offset) / %GraphEdit.zoom
+	%BackgroundContext.show()
+
+func _add_lt_node(graph: GraphEdit, lt: LootTable, output: bool = false) -> GraphNode:
 	var gn: LootTableGraphNode = LootTableGraphNode.new()
 	gn.loot_table = lt
 	gn.name = "LootTable"
 	gn.title = "LootTable"
 	graph.add_child(gn)
 	
+	if output:
+		var out_label: Label = Label.new()
+		out_label.text = "LootTable"
+		out_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		gn.add_child(out_label)
+		gn.set_slot_enabled_right(gn.get_child_count() - 1, true)
+		
+	var p_label: Label = Label.new()
+	p_label.text = "Pools"
+	gn.add_child(p_label)
+	gn.set_slot_enabled_left(gn.get_child_count() - 1, true)
+	
 	for i in range(0, lt.pools.size()):
 		var p: Pool = lt.pools[i]
 		
-		var p_label: Label = Label.new()
-		p_label.text = "Pool %d" % i
-		gn.add_child(p_label)
-		gn.set_slot_enabled_left(i, true)
-		
 		var pn: GraphNode = _add_pool_node(graph, p)
 		
-		graph.connect_node(pn.name, 0, gn.name, i)
+		graph.connect_node(pn.name, 0, gn.name, 0)
 	
 	return gn
 
@@ -64,18 +84,18 @@ func _add_pool_node(graph: GraphEdit, pool: Pool) -> GraphNode:
 	rolls_input.value = pool.rolls
 	rolls_input.value_changed.connect(func(v): pool.rolls = v)
 	gn.add_child(_wrap_with_label(rolls_input, "rolls"))
+		
+	var e_label: Label = Label.new()
+	e_label.text = "Entries"
+	gn.add_child(e_label)
+	gn.set_slot_enabled_left(gn.get_child_count() - 1, true)
 	
 	for i in range(0, pool.entries.size()):
 		var e: PoolEntry = pool.entries[i]
 		
-		var e_label: Label = Label.new()
-		e_label.text = "PoolEntry %d" % i
-		gn.add_child(e_label)
-		gn.set_slot_enabled_left(gn.get_child_count() - 1, true)
-		
 		var en: GraphNode = _add_entry_node(graph, e)
 		
-		graph.connect_node(en.name, 0, gn.name, i)
+		graph.connect_node(en.name, 0, gn.name, 0)
 	
 	return gn
 
@@ -110,6 +130,19 @@ func _add_entry_node(graph: GraphEdit, entry: PoolEntry) -> GraphNode:
 				resource_picker.edited_resource = entry.get(prop.name)
 				resource_picker.resource_changed.connect(func(r): entry.set(prop.name, r))
 				gn.add_child(_wrap_with_label(resource_picker, prop.name))
+				
+				if prop.hint_string == "PoolEntry":
+					gn.set_slot_enabled_left(gn.get_child_count() - 1, true)
+					var res: PoolEntry = entry.get(prop.name)
+					if res != null && (res.resource_path.is_empty() || !res.resource_path.ends_with(".tres")):
+						var res_gn: GraphNode = _add_entry_node(graph, res)
+						graph.connect_node(res_gn.name, 0, gn.name, gn.get_connection_input_count() - 1)
+				elif prop.hint_string == "LootTable":
+					gn.set_slot_enabled_left(gn.get_child_count() - 1, true)
+					var res: LootTable = entry.get(prop.name)
+					if res != null && (res.resource_path.is_empty() || !res.resource_path.ends_with(".tres")):
+						var res_gn: GraphNode = _add_lt_node(graph, res, true)
+						graph.connect_node(res_gn.name, 0, gn.name, gn.get_connection_input_count() - 1)
 			elif prop.type == TYPE_FLOAT:
 				var float_input: EditorSpinSlider = EditorSpinSlider.new()
 				float_input.hide_slider = true
@@ -147,4 +180,11 @@ func _wrap_with_label(inner: Control, label: String) -> Control:
 	inner.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
 #	hbox.size_flags_horizontal = Control.SIZE
 	return hbox
-	
+
+func _on_background_context_id_pressed(id):
+	if id == 0: # add loot table
+		var new: GraphNode = _add_lt_node(%GraphEdit, LootTable.new([]), true)
+		new.position_offset = _context_pos
+	elif id == 1: # add pool table
+		var new: GraphNode = _add_pool_node(%GraphEdit, Pool.new(1, []))
+		new.position_offset = _context_pos
