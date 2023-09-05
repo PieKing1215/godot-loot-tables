@@ -1,11 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://fdrf6f3tt0il"]
+[gd_scene load_steps=8 format=3 uid="uid://fdrf6f3tt0il"]
 
 [ext_resource type="Script" path="res://examples/Spawner.gd" id="1_t6rl6"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/LootTableEntry.gd" id="2_5y26p"]
 [ext_resource type="Script" path="res://addons/loot_tables/src/LootTable.gd" id="2_a21w3"]
+[ext_resource type="Script" path="res://addons/loot_tables/src/Pool.gd" id="4_chyb3"]
+
+[sub_resource type="Resource" id="Resource_4irk2"]
+script = ExtResource("2_5y26p")
+weight = 1.0
+
+[sub_resource type="Resource" id="Resource_k0o4n"]
+script = ExtResource("4_chyb3")
+rolls = 1
+entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_4irk2")])
 
 [sub_resource type="Resource" id="Resource_cdpxh"]
 script = ExtResource("2_a21w3")
-pools = Array[Resource("res://addons/loot_tables/src/Pool.gd")]([])
+pools = Array[ExtResource("4_chyb3")]([SubResource("Resource_k0o4n")])
 
 [node name="sample_scene" type="Node3D"]
 

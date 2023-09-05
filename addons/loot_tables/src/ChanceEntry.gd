@@ -5,7 +5,7 @@ extends PoolEntry
 @export var base: PoolEntry = null
 @export_range(0.0, 1.0) var chance: float = 0.5
 
-func _init(chance: float = 0.5, base: PoolEntry = PoolEntry.new()):
+func _init(chance: float = 0.5, base: PoolEntry = null):
 	self.chance = chance
 	self.base = base
 

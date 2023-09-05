@@ -5,7 +5,7 @@ var InspectorEditButton = preload("res://addons/loot_tables/ui/InspectorEditButt
 var plugin: EditorPlugin
 
 func _can_handle(object):
-	prints("_can_handle", object)
+#	prints("_can_handle", object)
 	return object is LootTable
 
 func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, hint_string: String, usage_flags, wide: bool):
@@ -25,5 +25,5 @@ func _parse_property(object: Object, type: Variant.Type, name: String, hint_type
 		return false
 
 func doit(table: LootTable):
-	prints("doit", table)
+#	prints("doit", table)
 	plugin.get_editor_interface().call_deferred("edit_resource", table)

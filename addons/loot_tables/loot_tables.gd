@@ -12,6 +12,7 @@ func _enter_tree():
 	inspector_plugin.plugin = self
 	add_inspector_plugin(inspector_plugin)
 	main_panel_instance = MainPanel.instantiate()
+	main_panel_instance.plugin = self
 	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
 	_make_visible(false)
 
@@ -22,11 +23,11 @@ func _exit_tree():
 		main_panel_instance.queue_free()
 
 func _handles(object):
-	prints("_handles", object, object.get_class(), object.get_script().get_path(), object is LootTable)
+#	prints("_handles", object, object.get_class(), object.get_script().get_path(), object is LootTable)
 	return object is LootTable
 
 func _edit(object):
-	prints("_edit", object)
+#	prints("_edit", object)
 	if object is LootTable:
 		main_panel_instance.edit_table(object)
 

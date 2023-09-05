@@ -13,6 +13,6 @@ item_1/id = 1
 script = ExtResource("1_e4dog")
 
 [node name="AddSubMenu" type="PopupMenu" parent="."]
-item_count = 1
-item_0/text = "sub1"
-item_0/id = 0
+unique_name_in_owner = true
+
+[connection signal="index_pressed" from="AddSubMenu" to="." method="_on_add_sub_menu_index_pressed"]
