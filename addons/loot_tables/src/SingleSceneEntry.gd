@@ -7,7 +7,7 @@ extends PoolEntry
 func _init(scene: PackedScene = null):
 	self.scene = scene
 	
-func roll() -> Array[Resource]:
+func roll(_ctx: Dictionary = {}) -> Array[Resource]:
 	return [scene]
 
 func title() -> String:

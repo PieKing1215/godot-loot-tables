@@ -9,9 +9,9 @@ func _init(chance: float = 0.5, base: PoolEntry = null):
 	self.chance = chance
 	self.base = base
 
-func roll() -> Array[Resource]:
+func roll(ctx: Dictionary = {}) -> Array[Resource]:
 	if chance >= 1.0 || (chance > 0.0 && randf() < chance):
-		return base.roll()
+		return base.roll(ctx)
 	else:
 		return []
 

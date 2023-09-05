@@ -7,10 +7,10 @@ extends Resource
 func _init(pools: Array[Pool] = []):
 	self.pools = pools
 
-func roll() -> Array[Resource]:
+func roll(ctx: Dictionary = {}) -> Array[Resource]:
 	var res: Array[Resource] = []
 	for p in pools:
-		res.append_array(p.roll())
+		res.append_array(p.roll(ctx))
 	return res
 
 func display_string(str_fn: Callable) -> String:

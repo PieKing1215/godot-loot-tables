@@ -4,8 +4,8 @@ extends PoolEntry
 
 @export var loot_table: LootTable
 
-func roll() -> Array[Resource]:
-	return loot_table.roll()
+func roll(ctx: Dictionary = {}) -> Array[Resource]:
+	return loot_table.roll(ctx)
 
 func title() -> String:
 	return "LootTableEntry"

@@ -4,7 +4,7 @@ extends PoolEntry
 
 @export var resource: Resource
 
-func roll() -> Array[Resource]:
+func roll(_ctx: Dictionary = {}) -> Array[Resource]:
 	return [resource]
 
 func title() -> String:

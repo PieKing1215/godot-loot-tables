@@ -4,7 +4,7 @@ extends Resource
 
 @export var weight: float = 1.0
 
-func roll() -> Array[Resource]:
+func roll(ctx: Dictionary = {}) -> Array[Resource]:
 	return []
 
 func title() -> String:

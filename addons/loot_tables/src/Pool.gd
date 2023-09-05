@@ -8,12 +8,12 @@ func _init(rolls: int = 1, entries: Array[PoolEntry] = []):
 	self.rolls = rolls
 	self.entries = entries
 
-func roll() -> Array[Resource]:
+func roll(ctx: Dictionary = {}) -> Array[Resource]:
 	var res: Array[Resource] = []
 	for r in range(rolls):
 		var ent: PoolEntry = _roll_entry(_entries())
 		if ent != null:
-			res.append_array(ent.roll())
+			res.append_array(ent.roll(ctx))
 	return res
 
 # (in case I want to make this dynamic later)
