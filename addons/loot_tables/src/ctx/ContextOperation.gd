@@ -9,13 +9,10 @@ static func get_float_or_constant_or_default(ctx: Dictionary, key: String, defau
 	if key.is_valid_float():
 		return key.to_float()
 	
-	if ctx.has(key) && ctx[key] is float:
-		return ctx[key]
-	
-	return default
+	return get_float_or_default(ctx, key, default)
 
 static func get_float_or_default(ctx: Dictionary, key: String, default: float) -> float:
-	if ctx.has(key) && ctx[key] is float:
+	if ctx.has(key) && (ctx[key] is float || ctx[key] is int):
 		return ctx[key]
 	
 	return default
