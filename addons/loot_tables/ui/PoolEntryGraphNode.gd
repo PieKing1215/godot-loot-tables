@@ -13,7 +13,7 @@ func _ready():
 	weight_input.allow_greater = true
 	weight_input.value = entry.weight
 	weight_input.value_changed.connect(func(v): entry.weight = v)
-	add_child(_wrap_with_label(weight_input, "weight"))
+	add_child(_LT_LootTableEditor._wrap_with_label(weight_input, "weight"))
 
 func out_port() -> int:
 	return 0

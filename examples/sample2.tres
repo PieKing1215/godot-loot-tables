@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_o1hfc"]
 script = ExtResource("3_lstjb")
 chance = 0.5
+multiply_ctx_id = ""
 weight = 1.0
 
 [sub_resource type="Resource" id="Resource_kuql2"]
@@ -18,7 +19,9 @@ weight = 1.0
 script = ExtResource("4_yoyj0")
 rolls = 1
 entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_o1hfc"), SubResource("Resource_kuql2")])
+ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
 
 [resource]
 script = ExtResource("1_cnqeq")
 pools = Array[ExtResource("4_yoyj0")]([SubResource("Resource_ofkx7")])
+ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])

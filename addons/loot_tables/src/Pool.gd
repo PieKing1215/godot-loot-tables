@@ -1,17 +1,30 @@
+@tool
 class_name Pool
 extends Resource
 
 @export var rolls: int = 1 # TODO: IntProvider
+@export var rolls_mult_ctx_id: String = ""
 @export var entries: Array[PoolEntry] = []
+@export var ctx_ops: Array[LTContextOperation] = []
 
 func _init(rolls: int = 1, entries: Array[PoolEntry] = []):
 	self.rolls = rolls
 	self.entries = entries
 
 func roll(ctx: Dictionary = {}) -> Array[Resource]:
+	for op in ctx_ops:
+		ctx = op.apply(ctx)
+	
+	var roll_ct := rolls
+	if rolls_mult_ctx_id != null && !rolls_mult_ctx_id.is_empty():
+		roll_ct = floor(roll_ct * LTContextOperation.get_float_or_default(ctx, rolls_mult_ctx_id, 1.0))
+	
+	return _do_rolls(roll_ct, ctx)
+
+func _do_rolls(roll_ct: int, ctx: Dictionary = {}) -> Array[Resource]:
 	var res: Array[Resource] = []
-	for r in range(rolls):
-		var ent: PoolEntry = _roll_entry(_entries())
+	for r in range(roll_ct):
+		var ent: PoolEntry = _roll_entry(_entries(), ctx)
 		if ent != null:
 			res.append_array(ent.roll(ctx))
 	return res
@@ -20,7 +33,7 @@ func roll(ctx: Dictionary = {}) -> Array[Resource]:
 func _entries() -> Array[PoolEntry]:
 	return entries
 
-func _roll_entry(ents: Array[PoolEntry]) -> PoolEntry:
+func _roll_entry(ents: Array[PoolEntry], ctx: Dictionary) -> PoolEntry:
 	if ents.is_empty():
 		return null
 	
@@ -28,7 +41,7 @@ func _roll_entry(ents: Array[PoolEntry]) -> PoolEntry:
 	
 	var total_weight: float = 0.0
 	for e in ents:
-		total_weight += e.weight
+		total_weight += e.calc_weight(ctx.duplicate())
 	
 	var r = randf_range(0, total_weight)
 	

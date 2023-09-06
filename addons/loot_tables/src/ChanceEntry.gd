@@ -4,13 +4,18 @@ extends PoolEntry
 
 @export var base: PoolEntry = null
 @export_range(0.0, 1.0) var chance: float = 0.5
+@export var chance_mult_ctx_id: String = ""
 
 func _init(chance: float = 0.5, base: PoolEntry = null):
 	self.chance = chance
 	self.base = base
 
 func roll(ctx: Dictionary = {}) -> Array[Resource]:
-	if chance >= 1.0 || (chance > 0.0 && randf() < chance):
+	var ch := chance
+	if chance_mult_ctx_id != null && !chance_mult_ctx_id.is_empty():
+		ch *= LTContextOperation.get_float_or_default(ctx, chance_mult_ctx_id, 1.0)
+		
+	if ch >= 1.0 || (ch > 0.0 && randf() < ch):
 		return base.roll(ctx)
 	else:
 		return []

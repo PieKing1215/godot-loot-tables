@@ -1,4 +1,5 @@
 @tool
+class_name _LT_LootTableEditor
 extends Control
 
 var plugin: EditorPlugin:
@@ -112,7 +113,7 @@ func _add_entry_node(graph: GraphEdit, entry: PoolEntry) -> PoolEntryGraphNode:
 	graph.add_child(gn)
 	
 	var props: Array[Dictionary] = entry.get_property_list()
-	props.sort_custom(func(a, b): return a.type == TYPE_OBJECT && a.hint == PROPERTY_HINT_RESOURCE_TYPE)
+	props.sort_custom(func(a, b): return (a.type == TYPE_OBJECT && a.hint == PROPERTY_HINT_RESOURCE_TYPE) || a.name == "weight_mult_ctx_id")
 	for prop in props:
 		if prop.name != "weight" && prop.usage & PROPERTY_USAGE_EDITOR && prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
 #			print(prop)
@@ -229,20 +230,14 @@ func _add_entry_node(graph: GraphEdit, entry: PoolEntry) -> PoolEntryGraphNode:
 				int_input.value = entry.get(prop.name)
 				int_input.value_changed.connect(func(v): entry.set(prop.name, v))
 				gn.add_child(_wrap_with_label(int_input, prop.name))
+			elif prop.type == TYPE_STRING:
+				var string_input: LineEdit = LineEdit.new()
+				var val = entry.get(prop.name)
+				string_input.text = "" if val == null else val
+				string_input.text_changed.connect(func(v): entry.set(prop.name, v))
+				gn.add_child(_wrap_with_label(string_input, prop.name))
 	
 	return gn
-
-func _wrap_with_label(inner: Control, label: String) -> Control:
-	var hbox: HBoxContainer = HBoxContainer.new()
-	var lbl: Label = Label.new()
-	lbl.text = label
-	hbox.add_child(lbl)
-	hbox.add_child(inner)
-	hbox.custom_minimum_size.x = 200
-	inner.custom_minimum_size.x = 150
-	inner.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
-#	hbox.size_flags_horizontal = Control.SIZE
-	return hbox
 
 func _on_background_context_id_pressed(id):
 	if id == 0: # add loot table
@@ -305,9 +300,19 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]):
 	for sn in nodes:
 		%GraphEdit.get_node(String(sn)).queue_free()
 
-
-
 func _on_background_context_select_add_type(class_path):
 	var inst: PoolEntry = load(class_path).new()
 	var new: GraphNode = _add_entry_node(%GraphEdit, inst)
 	new.position_offset = _context_pos
+
+
+static func _wrap_with_label(inner: Control, label: String, min_width: float = 200) -> Control:
+	var hbox: HBoxContainer = HBoxContainer.new()
+	var lbl: Label = Label.new()
+	lbl.text = label
+	hbox.add_child(lbl)
+	hbox.add_child(inner)
+	hbox.custom_minimum_size.x = min_width
+	inner.custom_minimum_size.x = hbox.custom_minimum_size.x - 50
+	inner.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_SHRINK_END
+	return hbox
