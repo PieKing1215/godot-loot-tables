@@ -53,6 +53,9 @@ func _roll_entry(ents: Array[PoolEntry], ctx: Dictionary) -> PoolEntry:
 	printerr("_roll_entry failed (?)")
 	return null
 
+func title() -> String:
+	return "Pool"
+
 func display_string(str_fn: Callable) -> String:
 	var res := " OR ".join(entries.map(func(e: PoolEntry):
 		if entries.size() > 1:

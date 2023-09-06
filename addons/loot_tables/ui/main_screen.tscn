@@ -35,6 +35,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_vertical = 3
+right_disconnects = true
 script = ExtResource("2_t3h45")
 
 [node name="BackgroundContext" parent="." instance=ExtResource("3_fk6gu")]
@@ -46,4 +47,5 @@ visible = false
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
 [connection signal="popup_request" from="GraphEdit" to="." method="show_background_context"]
 [connection signal="id_pressed" from="BackgroundContext" to="." method="_on_background_context_id_pressed"]
-[connection signal="select_add_type" from="BackgroundContext" to="." method="_on_background_context_select_add_type"]
+[connection signal="select_add_entry_type" from="BackgroundContext" to="." method="_on_background_context_select_add_type"]
+[connection signal="select_add_pool_type" from="BackgroundContext" to="." method="_on_background_context_select_add_pool_type"]

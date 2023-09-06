@@ -75,6 +75,8 @@ func _add_lt_node(graph: GraphEdit, lt: LootTable, output: bool = false) -> Loot
 
 func _add_pool_node(graph: GraphEdit, pool: Pool) -> PoolGraphNode:
 	var gn: PoolGraphNode = pool_graph_node_scn.instantiate()
+	prints(pool, pool.has_method("title"))
+	gn.title = pool.title()
 	gn.pool = pool
 	graph.add_child(gn)
 	
@@ -303,6 +305,12 @@ func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]):
 func _on_background_context_select_add_type(class_path):
 	var inst: PoolEntry = load(class_path).new()
 	var new: GraphNode = _add_entry_node(%GraphEdit, inst)
+	new.position_offset = _context_pos
+
+
+func _on_background_context_select_add_pool_type(class_path):
+	var inst: Pool = load(class_path).new()
+	var new: GraphNode = _add_pool_node(%GraphEdit, inst)
 	new.position_offset = _context_pos
 
 

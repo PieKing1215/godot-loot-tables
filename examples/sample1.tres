@@ -12,65 +12,75 @@
 script = ExtResource("4_pjqai")
 scene = ExtResource("4_k0nxm")
 weight = 1.0
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_7tfto"]
 script = ExtResource("7_2cv70")
 base = SubResource("Resource_uxg7f")
 chance = 0.5
-multiply_ctx_id = ""
+chance_mult_ctx_id = ""
 weight = 1.0
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_poyjh"]
 script = ExtResource("2_i06ak")
 rolls = 1
+rolls_mult_ctx_id = ""
 entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_7tfto")])
 ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
 
 [sub_resource type="Resource" id="Resource_rvdno"]
 script = ExtResource("1_5tufn")
-pools = [SubResource("Resource_poyjh")]
-ctx_ops = null
+pools = Array[ExtResource("2_i06ak")]([SubResource("Resource_poyjh")])
+ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
 
 [sub_resource type="Resource" id="Resource_7vnfk"]
 script = ExtResource("1_5kv4x")
 loot_table = SubResource("Resource_rvdno")
 weight = 8.2
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_3bcvc"]
 script = ExtResource("2_i06ak")
 rolls = 1
+rolls_mult_ctx_id = ""
 entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_7vnfk")])
 ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
-
-[sub_resource type="Resource" id="Resource_hu7l8"]
-script = ExtResource("4_pjqai")
-scene = ExtResource("4_k0nxm")
-weight = 1.0
 
 [sub_resource type="Resource" id="Resource_r4pgs"]
 script = ExtResource("4_pjqai")
 scene = ExtResource("6_73lts")
 weight = 1.0
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_grtnt"]
 script = ExtResource("4_pjqai")
 scene = ExtResource("6_73lts")
 weight = 1.0
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_crk6e"]
 script = ExtResource("7_2cv70")
 base = SubResource("Resource_grtnt")
 chance = 0.719
-multiply_ctx_id = null
+chance_mult_ctx_id = ""
 weight = 1.0
+weight_mult_ctx_id = ""
+
+[sub_resource type="Resource" id="Resource_hu7l8"]
+script = ExtResource("4_pjqai")
+scene = ExtResource("4_k0nxm")
+weight = 1.0
+weight_mult_ctx_id = ""
 
 [sub_resource type="Resource" id="Resource_u8lq8"]
 script = ExtResource("2_i06ak")
 rolls = 1
-entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_hu7l8"), SubResource("Resource_r4pgs"), SubResource("Resource_crk6e")])
+rolls_mult_ctx_id = ""
+entries = Array[Resource("res://addons/loot_tables/src/PoolEntry.gd")]([SubResource("Resource_r4pgs"), SubResource("Resource_crk6e"), SubResource("Resource_hu7l8")])
 ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
 
 [resource]
 script = ExtResource("1_5tufn")
-pools = [SubResource("Resource_3bcvc"), SubResource("Resource_u8lq8")]
-ctx_ops = null
+pools = Array[ExtResource("2_i06ak")]([SubResource("Resource_3bcvc"), SubResource("Resource_u8lq8")])
+ctx_ops = Array[Resource("res://addons/loot_tables/src/ctx/ContextOperation.gd")]([])
