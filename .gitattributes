@@ -5,3 +5,5 @@
 /**        export-ignore
 /addons    !export-ignore
 /addons/** !export-ignore
+/addons/plugin_refresher export-ignore
+/addons/plugin_refresher/** export-ignore
