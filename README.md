@@ -17,3 +17,9 @@ TODO: good readme
 
 ![image](https://github.com/PieKing1215/godot-loot-tables/assets/13819558/2d38bd0e-3973-4e4b-aa86-6ab24de13e99)
 
+### TODO
+- Implement remaining graph editing controls (copy/paste, etc)
+- Undo/Redo
+- Highlight nodes that will not be saved
+- Handle more edge cases
+- Live preview (roll and show results in editor)
